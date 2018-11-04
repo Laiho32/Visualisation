@@ -13,7 +13,7 @@ namespace WindowsFormsApp1
     {
         private float clickPointX = 0;
         private float clickPointY = 0;
-        
+
         private float mapPositionX = 0;
         private float mapPositionY = 0;
 
@@ -21,7 +21,7 @@ namespace WindowsFormsApp1
         private float coef = 0;
         private int rotationX = 0;
         private int alpha = 0;
-        private bool auxiliaire = false;
+        private bool forward = true;
         private bool interpolation = false;
         private bool sorted = false;
         private bool topView = true;
@@ -145,7 +145,7 @@ namespace WindowsFormsApp1
             myGLControl.MouseMove += MyGLControl_MouseMove;
             myGLControl.MouseWheel += MyGLControl_mouseWheel;
         }
-        
+
         private void MyGLControl_Paint(object sender, PaintEventArgs e)
         {
             myGLControl.MakeCurrent();
@@ -218,7 +218,7 @@ namespace WindowsFormsApp1
                     }
                 }
             }
-            
+
             GL.Translate(-mapPositionX, -mapPositionY, 0);
             GL.Rotate(rotationX, new Vector3(1, 0, 0));
             myGLControl.SwapBuffers();
@@ -376,8 +376,8 @@ namespace WindowsFormsApp1
 
         private void IdDateButton_Click(object sender, EventArgs e)
         {
-            auxiliaire = !auxiliaire;
-            interpolation = true;
+            //auxiliaire = !auxiliaire;
+            //interpolation = true;
 
             timerInterpolation.Start();
 
@@ -387,22 +387,26 @@ namespace WindowsFormsApp1
 
         private void TimerInterpolation_Tick(object sender, EventArgs e)
         {
-            if (auxiliaire)
+            if (forward)
             {
-                coef += (float)0.05;
+                //coef += (float)0.05;
+                curveTrackBar.Value++;
             }
             else
             {
-                coef -= (float)0.05;
+                //coef -= (float)0.05;
+                curveTrackBar.Value--;
             }
 
-            if (coef > 1)
+            //if (coef > 1)
+            if (curveTrackBar.Value == 20)
             {
                 timerInterpolation.Stop();
                 interpolation = true;
             }
 
-            if (coef < 0)
+            //if (coef < 0)
+            if (curveTrackBar.Value == 0)
             {
                 timerInterpolation.Stop();
                 interpolation = false;
@@ -420,8 +424,8 @@ namespace WindowsFormsApp1
 
             if (mouseRightDown)
             {
-                newScaledX = ((float) GenericScaleDouble(e.X, 1000, 1, 0, -1));
-                newScaledY = ((float) GenericScaleDouble(e.Y, 1000, 1, 0, -1));
+                newScaledX = ((float)GenericScaleDouble(e.X, 1000, 1, 0, -1));
+                newScaledY = ((float)GenericScaleDouble(e.Y, 1000, 1, 0, -1));
 
                 mapPositionX += newScaledX - clickPointX;
                 mapPositionY += -(newScaledY - clickPointY);
@@ -464,6 +468,27 @@ namespace WindowsFormsApp1
             {
                 GL.Scale(1.1, 1.1, 0);
             }
+
+            if (myGLControl != null)
+                myGLControl.Invalidate();
+        }
+
+        private void CurveTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            interpolation = true;
+
+            if (curveTrackBar.Value == 0)
+            {
+                interpolation = false;
+                forward = true;
+            }
+
+            if (curveTrackBar.Value == 20)
+            {
+                forward = false;
+            }
+
+            coef = curveTrackBar.Value * (float)0.05;
 
             if (myGLControl != null)
                 myGLControl.Invalidate();

@@ -43,8 +43,10 @@
             this.IdDateButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.timerInterpolation = new System.Windows.Forms.Timer(this.components);
+            this.curveTrackBar = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.AlphaTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RotateTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.curveTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // RangeSliger
@@ -167,11 +169,21 @@
             this.timerInterpolation.Interval = 50;
             this.timerInterpolation.Tick += new System.EventHandler(this.TimerInterpolation_Tick);
             // 
+            // curveTrackBar
+            // 
+            this.curveTrackBar.Location = new System.Drawing.Point(12, 426);
+            this.curveTrackBar.Maximum = 20;
+            this.curveTrackBar.Name = "curveTrackBar";
+            this.curveTrackBar.Size = new System.Drawing.Size(310, 56);
+            this.curveTrackBar.TabIndex = 12;
+            this.curveTrackBar.ValueChanged += new System.EventHandler(this.CurveTrackBar_ValueChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(990, 467);
+            this.ClientSize = new System.Drawing.Size(990, 561);
+            this.Controls.Add(this.curveTrackBar);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.IdDateButton);
             this.Controls.Add(this.rotateButton);
@@ -189,6 +201,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.AlphaTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RotateTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.curveTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -210,6 +223,7 @@
         private System.Windows.Forms.Button IdDateButton;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Timer timerInterpolation;
+        private System.Windows.Forms.TrackBar curveTrackBar;
     }
 }
 
