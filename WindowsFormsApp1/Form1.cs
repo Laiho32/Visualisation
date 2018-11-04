@@ -145,7 +145,6 @@ namespace WindowsFormsApp1
             myGLControl.MouseMove += MyGLControl_MouseMove;
             myGLControl.MouseWheel += MyGLControl_mouseWheel;
         }
-
         
 
         private void MyGLControl_Paint(object sender, PaintEventArgs e)
@@ -165,15 +164,13 @@ namespace WindowsFormsApp1
             GL.Translate(mapPositionX, mapPositionY, 0);
             GL.PointSize(1);
 
-
-
             if (!interpolation)
             {
                 if (sorted)
                 {
                     foreach (Segment s in Segment.AllSegments)
                     {
-                        if (altitudeMin < s.AltitudeMoyenne && s.AltitudeMoyenne < altitudeMax)
+                        if (altitudeMin < s.AltitudeMin && s.AltitudeMax < altitudeMax)
                         {
                             GL.Begin(BeginMode.Lines);
 
@@ -219,6 +216,7 @@ namespace WindowsFormsApp1
                     }
                 }
             }
+            
             GL.Translate(-mapPositionX, -mapPositionY, 0);
             GL.Rotate(rotationX, new Vector3(1, 0, 0));
             myGLControl.SwapBuffers();
@@ -452,34 +450,18 @@ namespace WindowsFormsApp1
             }
         }
 
-
         private void MyGLControl_mouseWheel(object sender, MouseEventArgs e)
         {
             // p1 = k * (p0 - c) + c
-            float oldX = (float)GenericScaleDouble(e.X, 1000, 1, 0, -1); //en px
-            float oldY = (float)GenericScaleDouble(e.Y, 1000, 1, 0, -1); //en px
-            double scale;
-
+            
             if (e.Delta < 0)
             {
-                scale = 0.9;
                 GL.Scale(0.9, 0.9, 0);
             }
             else
             {
-                scale = 1.1;
                 GL.Scale(1.1, 1.1, 0);
             }
-
-            float newX = (int) (oldX * scale);
-            float newY = (int) (oldY * scale);
-
-            //double diffX = GenericScaleDouble(oldX, 1000, 1, 0, -1) - GenericScaleDouble(newX, 1000, 1, 0, -1);
-            //mapPositionX += newX - oldX;
-            //mapPositionY += oldY - newY;
-
-            //mapPositionX += (float)GenericScaleDouble(diffX, 1000, 1, 0, -1);
-            //mapPositionY = (float)GenericScaleDouble(oldY - newY, 1000, 1, 0, -1);
 
             if (myGLControl != null)
                 myGLControl.Invalidate();
