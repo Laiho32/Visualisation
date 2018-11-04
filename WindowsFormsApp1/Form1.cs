@@ -459,7 +459,6 @@ namespace WindowsFormsApp1
         private void MyGLControl_mouseWheel(object sender, MouseEventArgs e)
         {
             // p1 = k * (p0 - c) + c
-
             if (e.Delta < 0)
             {
                 GL.Scale(0.9, 0.9, 0);
