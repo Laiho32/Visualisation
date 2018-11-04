@@ -146,7 +146,6 @@ namespace WindowsFormsApp1
             myGLControl.MouseWheel += MyGLControl_mouseWheel;
         }
         
-
         private void MyGLControl_Paint(object sender, PaintEventArgs e)
         {
             myGLControl.MakeCurrent();
@@ -205,14 +204,17 @@ namespace WindowsFormsApp1
             {
                 foreach (var item in dic)
                 {
-                    foreach (var record in item.Value)
+                    if (GetMin(item.Value) > altitudeMin && GetMax(item.Value) < altitudeMax)
                     {
-                        GL.Begin(BeginMode.Points);
-                        GL.Color4(GetColor(record));
-                        GL.Vertex3(record.NormalizedDate * coef + (1 - coef) * record.X,
-                                   record.NormalizedID * coef + (1 - coef) * record.Y,
-                                   (1 - coef) * record.Z);
-                        GL.End();
+                        foreach (var record in item.Value)
+                        {
+                            GL.Begin(BeginMode.Points);
+                            GL.Color4(GetColor(record));
+                            GL.Vertex3(record.NormalizedDate * coef + (1 - coef) * record.X,
+                                       record.NormalizedID * coef + (1 - coef) * record.Y,
+                                       (1 - coef) * record.Z);
+                            GL.End();
+                        }
                     }
                 }
             }
@@ -453,7 +455,7 @@ namespace WindowsFormsApp1
         private void MyGLControl_mouseWheel(object sender, MouseEventArgs e)
         {
             // p1 = k * (p0 - c) + c
-            
+
             if (e.Delta < 0)
             {
                 GL.Scale(0.9, 0.9, 0);
