@@ -17,7 +17,7 @@ namespace WindowsFormsApp1
         private float mapPositionX = 0;
         private float mapPositionY = 0;
 
-        private bool mouseRightDown = false;
+        private bool mouseLeftDown = false;
         private float coef = 0;
         private int rotationX = 0;
         private int alpha = 0;
@@ -422,7 +422,7 @@ namespace WindowsFormsApp1
             float newScaledX = 0;
             float newScaledY = 0;
 
-            if (mouseRightDown)
+            if (mouseLeftDown)
             {
                 newScaledX = ((float)GenericScaleDouble(e.X, 1000, 1, 0, -1));
                 newScaledY = ((float)GenericScaleDouble(e.Y, 1000, 1, 0, -1));
@@ -440,7 +440,7 @@ namespace WindowsFormsApp1
 
         private void MyGLControl_MouseUp(object sender, MouseEventArgs e)
         {
-            mouseRightDown = false;
+            mouseLeftDown = false;
 
             if (myGLControl != null)
                 myGLControl.Invalidate();
@@ -448,11 +448,11 @@ namespace WindowsFormsApp1
 
         private void MyGLControl_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Left)
             {
                 clickPointX = (float)GenericScaleDouble(e.X, 1000, 1, 0, -1);
                 clickPointY = (float)GenericScaleDouble(e.Y, 1000, 1, 0, -1);
-                mouseRightDown = true;
+                mouseLeftDown = true;
             }
         }
 
